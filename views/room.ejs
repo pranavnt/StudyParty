@@ -126,6 +126,13 @@
       // Get the element with id="defaultOpen" and click on it
       document.getElementById("defaultOpen").click();
     </script>
+    <script>
+      function constructURL(embedCode, type) {
+        return (
+          "https://quizlet.com/" + embedCode + "/" + type + "/embed?x=1jj1"
+        );
+      }
+    </script>
   </head>
   <body>
     <div class="grid-container">
@@ -134,25 +141,22 @@
       </div>
       <div class="videoDiv">
         <button class="tablink" onclick="openPage('Home', this, '#f1f1f1')">
-          Home
+          Textbook
         </button>
         <button
           class="tablink"
           onclick="openPage('News', this, '#f1f1f1')"
           id="defaultOpen"
         >
-          News
+          Quizlet
         </button>
         <button class="tablink" onclick="openPage('Contact', this, '#f1f1f1')">
-          Contact
-        </button>
-        <button class="tablink" onclick="openPage('About', this, '#f1f1f1')">
-          About
+          Khan Academy
         </button>
 
         <div id="Home" class="tabcontent">
-          <h3>Home</h3>
-          <p>Home is where the heart is..</p>
+          <h3>Textbook</h3>
+          <iframe>Libgen link</iframe>
         </div>
 
         <div id="News" class="tabcontent">
@@ -163,11 +167,6 @@
         <div id="Contact" class="tabcontent">
           <h3>Contact</h3>
           <p>Get in touch, or swing by for a cup of coffee.</p>
-        </div>
-
-        <div id="About" class="tabcontent">
-          <h3>About</h3>
-          <p>Who we are and what we do.</p>
         </div>
       </div>
     </div>

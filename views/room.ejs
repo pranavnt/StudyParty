@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script>
+      const ROOM_ID = "<%= roomId %>";
+    </script>
+    <script
+      defer
+      src="https://unpkg.com/peerjs@1.2.0/dist/peerjs.min.js"
+    ></script>
+    <script src="/socket.io/socket.io.js" defer></script>
+    <script src="script.js" defer></script>
+    <title>My Room</title>
+    <style>
+      #video-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 37.5vh);
+        grid-auto-rows: 25vh;
+        float: right;
+      }
+
+      video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    </style>
+
+    <style>
+      html,
+      body,
+      .grid-container {
+        height: 100%;
+        margin: 0;
+      }
+
+      .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        gap: 1px 1px;
+        grid-template-areas: "videoDiv videoDiv videoDiv videosDiv" "videoDiv videoDiv videoDiv videosDiv" "videoDiv videoDiv videoDiv videosDiv";
+      }
+
+      .videosDiv {
+        grid-area: videosDiv;
+        overflow-y: auto;
+      }
+
+      .videoDiv {
+        grid-area: videoDiv;
+      }
+    </style>
+
+    <script>
+      var player,
+        timer,
+        timeSpent = [];
+
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player("player", {
+          events: { onStateChange: onPlayerStateChange },
+        });
+      }
+
+      function onPlayerStateChange(event) {
+        if (event.data === 1) {
+          // Started playing
+          if (!timeSpent.length) {
+            for (var i = 0, l = parseInt(player.getDuration()); i < l; i++)
+              timeSpent.push(false);
+          }
+          timer = setInterval(record, 100);
+        } else {
+          clearInterval(timer);
+        }
+      }
+
+      function record() {
+        timeSpent[parseInt(player.getCurrentTime())] = true;
+        showPercentage();
+      }
+
+      function showPercentage() {
+        var percent = 0;
+        for (var i = 0, l = timeSpent.length; i < l; i++) {
+          if (timeSpent[i]) percent++;
+        }
+        console.log(percent);
+      }
+
+      function constructURL() {
+        return "https://youtube.com/embed" + arguments[0] + "?enablejsapi=1#";
+      }
+    </script>
+  </head>
+  <body>
+    <div class="grid-container">
+      <div class="videosDiv">
+        <div id="video-grid"></div>
+      </div>
+      <div class="videoDiv">
+        <div style="display: block">
+          <label>Embed Code:</label>
+          <input type="text" id="embedCodeEntered" />
+          <input type="button" value="Pause" />
+          <input type="button" value="forward 5 seconds" />
+          <input type="button" value="back 5 seconds" />
+          <label>Seconds Position:</label>
+          <input type="text" id="secondsPosEntered" />
+        </div>
+        <iframe
+          id="player"
+          src="https://www.youtube.com/embed/oHg5SJYRHA0?enablejsapi=1?autoplay=1"
+          width="75%"
+          style="
+            position: absolute;
+            height: 90%;
+            display: block;
+            margin-top: 20px;
+          "
+          allow="autoplay"
+        ></iframe>
+      </div>
+    </div>
+  </body>
+</html>

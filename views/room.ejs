@@ -2,7 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <script>
       const ROOM_ID = "<%= roomId %>";
@@ -17,8 +18,8 @@
     <style>
       #video-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, 37.5vh);
-        grid-auto-rows: 25vh;
+        grid-template-columns: repeat(auto-fill, 30vh);
+        grid-auto-rows: 20vh;
         float: right;
       }
 
@@ -66,20 +67,19 @@
         height: 100%;
         margin: 0;
         font-family: Arial;
-        color: black;
       }
 
       /* Style tab links */
       .tablink {
         background-color: #555;
-        color: black;
+        color: white;
         float: left;
         border: none;
         outline: none;
         cursor: pointer;
         padding: 14px 16px;
         font-size: 17px;
-        width: 25%;
+        width: 33.333333%;
       }
 
       .tablink:hover {
@@ -94,13 +94,13 @@
         height: 100%;
       }
 
-      #Home {
+      #Textbook {
         background-color: #f1f1f1;
       }
-      #News {
+      #Quizlet {
         background-color: #f1f1f1;
       }
-      #Contact {
+      #Khan Academy {
         background-color: #f1f1f1;
       }
       #About {
@@ -117,10 +117,10 @@
         }
         tablinks = document.getElementsByClassName("tablink");
         for (i = 0; i < tablinks.length; i++) {
-          [i].style.backgroundColor = "";
+          [i].style.backgroundColor = "#f1f1f1";
         }
         document.getElementById(pageName).style.display = "block";
-        elmnt.style.backgroundColor = color;
+        elmnt.style.backgroundColor = "#f1f1f1";
       }
 
       // Get the element with id="defaultOpen" and click on it
@@ -140,38 +140,61 @@
         <div id="video-grid"></div>
       </div>
       <div class="videoDiv" style="background-color: #f1f1f1">
-        <button class="tablink" onclick="openPage('Home', this, '#f1f1f1')">
+        <button class="tablink" onclick="openPage('Textbook', this, '#c1c1c1')">
           Textbook
         </button>
         <button
           class="tablink"
-          onclick="openPage('News', this, '#f1f1f1')"
+          onclick="openPage('Quizlet', this, '#c1c1c1')"
           id="defaultOpen"
         >
           Quizlet
         </button>
-        <button class="tablink" onclick="openPage('Contact', this, '#f1f1f1')">
+        <button
+          class="tablink"
+          onclick="openPage('Khan Academy', this, '#c1c1c1')"
+        >
           Khan Academy
         </button>
 
-        <div id="Home" class="tabcontent">
-          <h3>Textbook</h3>
-          <iframe src="" style="width: 100%; height: 90vh"></iframe>
-        </div>
-
-        <div id="News" class="tabcontent">
-          <h3>Quizlet</h3>
-          <iframe src="" style="width: 100%; height: 90vh"></iframe>
-        </div>
-
-        <div id="Contact" class="tabcontent">
-          <h3>Khan Academy</h3>
+        <div id="Textbook" class="tabcontent">
           <iframe
-            src="https://www.khanacademy.org/science/ap-biology"
-            style="width: 100%; height: 90vh"
+            src="https://firebasestorage.googleapis.com/v0/b/studyparty-d1ea0.appspot.com/o/Campbell's%20Biology%20in%20Focus.pdf?alt=media&token=70b8e816-4ca6-444e-a34e-bcf46c9d6530"
+            style="width: 100%; height: 87vh"
           ></iframe>
         </div>
+
+        <div id="Quizlet" class="tabcontent">
+          <iframe src="" style="width: 100%"></iframe>
+        </div>
+
+        <div id="Khan Academy" class="tabcontent">
+          <iframe
+            src="https://www.youtube.com/embed/videoseries?list=PL0E278E6CA0A3DD5B"
+            style="width: 100%; height: 87vh"
+          >
+            ></iframe
+          >
+        </div>
       </div>
+      <script>
+        function openPage(pageName, elmnt, color) {
+          var i, tabcontent, tablinks;
+          tabcontent = document.getElementsByClassName("tabcontent");
+          for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+          }
+          tablinks = document.getElementsByClassName("tablink");
+          for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].style.backgroundColor = "";
+          }
+          document.getElementById(pageName).style.display = "block";
+          elmnt.style.backgroundColor = color;
+        }
+
+        // Get the element with id="defaultOpen" and click on it
+        document.getElementById("defaultOpen").click();
+      </script>
     </div>
   </body>
 </html>

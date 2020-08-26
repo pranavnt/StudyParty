@@ -54,77 +54,13 @@
         grid-area: videoDiv;
       }
     </style>
-
-    <script>
-      var player,
-        timer,
-        timeSpent = [];
-
-      function onYouTubeIframeAPIReady() {
-        player = new YT.Player("player", {
-          events: { onStateChange: onPlayerStateChange },
-        });
-      }
-
-      function onPlayerStateChange(event) {
-        if (event.data === 1) {
-          // Started playing
-          if (!timeSpent.length) {
-            for (var i = 0, l = parseInt(player.getDuration()); i < l; i++)
-              timeSpent.push(false);
-          }
-          timer = setInterval(record, 100);
-        } else {
-          clearInterval(timer);
-        }
-      }
-
-      function record() {
-        timeSpent[parseInt(player.getCurrentTime())] = true;
-        showPercentage();
-      }
-
-      function showPercentage() {
-        var percent = 0;
-        for (var i = 0, l = timeSpent.length; i < l; i++) {
-          if (timeSpent[i]) percent++;
-        }
-        console.log(percent);
-      }
-
-      function constructURL() {
-        return "https://youtube.com/embed" + arguments[0] + "?enablejsapi=1#";
-      }
-    </script>
   </head>
   <body>
     <div class="grid-container">
       <div class="videosDiv">
         <div id="video-grid"></div>
       </div>
-      <div class="videoDiv">
-        <div style="display: block">
-          <label>Embed Code:</label>
-          <input type="text" id="embedCodeEntered" />
-          <input type="button" value="Pause" />
-          <input type="button" value="forward 5 seconds" />
-          <input type="button" value="back 5 seconds" />
-          <label>Seconds Position:</label>
-          <input type="text" id="secondsPosEntered" />
-        </div>
-        <iframe
-          id="player"
-          src="https://www.youtube.com/embed/oHg5SJYRHA0?enablejsapi=1?autoplay=1"
-          width="75%"
-          style="
-            position: absolute;
-            height: 90%;
-            display: block;
-            margin-top: 20px;
-          "
-          allow="autoplay"
-        ></iframe>
-      </div>
+      <div class="videoDiv"></div>
     </div>
   </body>
 </html>

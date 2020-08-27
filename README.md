@@ -1,1 +1,1 @@
-# Khan Academy Party
+# Study Party
